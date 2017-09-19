@@ -2,24 +2,24 @@ const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'
 
 const defaultSchedule = {
     monday: [
-        {name: "раковины", done: false},
-        {name: "унитаз", done: false},
-        {name: "ванная", done: false}
+        {name: "раковины", done: false, id: 1},
+        {name: "унитаз", done: false, id: 2},
+        {name: "ванная", done: false, id: 3}
     ],
     tuesday: [
-        {name: "плита", done: false},
-        {name: "микроволновка", done: false},
-        {name: "поверхности", done: false}
+        {name: "плита", done: false, id: 4},
+        {name: "микроволновка", done: false, id: 5},
+        {name: "поверхности", done: false, id: 6}
     ],
     wednesday: [
-        {name: "мусор", done: false}
+        {name: "мусор", done: false, id: 7}
     ],
     thursday: [
-        {name: "полы", done: false}
+        {name: "полы", done: false, id: 8}
     ],
     friday: [
-        {name: "полотенца", done: false},
-        {name: "постельное", done: false}
+        {name: "полотенца", done: false, id: 9},
+        {name: "постельное", done: false, id: 10}
     ],
     saturday: [],
     sunday: []
@@ -28,7 +28,7 @@ const defaultSchedule = {
 window.onload = () => loadSchedule();
 
 function loadSchedule() {
-    if (localStorage.hasOwnProperty('schedule')) {
+    if (!localStorage.hasOwnProperty('schedule')) {
         setSchedule(defaultSchedule);
     } else {
         let schedule = JSON.parse(localStorage.getItem("schedule"));
@@ -42,16 +42,17 @@ function setSchedule(schedule) {
     });
 }
 
-save.onclick = () => saveSchedule();
+document.getElementById('save').onclick = () => saveSchedule();
 
 function saveSchedule() {
+    let id = 0;
     const schedule = {};
     days.map((day) => {
         let dayly = [];
         let tasks = document.getElementById(day).value.split(", ");
         if (tasks.length > 0 && tasks[0].length > 0) {
             tasks.map((task) => {
-                dayly.push({name: task, done: false});
+                dayly.push({name: task, done: false, id: ++id});
             });
         }
         schedule[day] = dayly;
