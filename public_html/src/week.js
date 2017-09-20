@@ -6,6 +6,9 @@ window.onload = () => renderList();
 function renderList() {
     days.map((day) => {
         let parent = document.getElementById(day);
+        if(parent.id === getToday()) {
+            parent.parentElement.setAttribute('class', 'box today');
+        }
         schedule[day].map((task) => newLi(parent, task));
     });
 }
@@ -30,7 +33,6 @@ function newLi(parent, task) {
 function saveChecked(check) {
     days.forEach((day) => {
         schedule[day].forEach((task) => {
-            console.log(check.id + ' ' + task.id);
             if (check.id == task.id) {
                 task.done = !task.done;
             }
@@ -38,5 +40,17 @@ function saveChecked(check) {
     });
     let data = JSON.stringify(schedule);
     localStorage.setItem('schedule', data);
-    console.log(data);
 }
+
+function getToday() {
+    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const now = new Date();
+    return days[now.getDay()];
+}
+
+function timeForInterval() {
+    const now = new Date();
+    return (1000 * 60 * 60 * 24) - now.getMilliseconds();
+}
+
+window.setInterval(() => location.reload(), timeForInterval());
