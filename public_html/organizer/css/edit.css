@@ -1,0 +1,68 @@
+* {
+    font-family: sans-serif;
+}
+
+.caption {
+    text-align: center;
+    border: 2px solid #66cdaa;
+    background: #afeeee;
+    padding: 10px;
+}
+
+.panel-content {
+    border: 2px solid #66cdaa;
+    border-top: none;
+    padding: 10px;
+}
+
+
+.add-task {
+    width: 15px;
+    height: 15px;
+}
+
+.field-box {
+    border: 1px solid #dddddd;
+    border-radius: 2px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task {
+    border: none;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.delete-task {
+    border: none;
+    width: 15px;
+    height: 15px;
+}
+
+.link {
+    padding: 5px;
+    border: none;
+    color: #000000;
+    font-size: 12px;
+    background: #afeeee;
+    text-decoration: none;
+    position: relative;
+    top: 10px;
+    margin-bottom: 5px;
+}
+
+.box-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.head {
+    color: #ffffff;
+    background: #66cdaa;
+    padding: 8px;
+    padding-left: 5px;
+}
