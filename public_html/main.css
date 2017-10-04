@@ -38,8 +38,14 @@
     border: 1px solid #dddddd;
     border-radius: 2px;
     padding: 2px;
-    width: 75%;
+    width: auto;
     font-size: 12px;
+    margin-right: 5px;
+}
+
+.panel input[type="image"] {
+    width: 15px;
+    height: 15px;
 }
 
 .checkist td input {
@@ -83,7 +89,7 @@ li {
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
-    
+
 }
 
 .box {
