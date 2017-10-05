@@ -9,53 +9,10 @@
     padding: 10px;
 }
 
-.panel {
-    /*width: 75%;*/
-}
-
 .panel-content {
     border: 2px solid #66cdaa;
     border-top: none;
     padding: 10px;
-}
-
-.panel table {
-    width: 100%;
-    border-spacing: 0;
-}
-
-.panel th {
-    color: #ffffff;
-    background: #66cdaa;
-    padding: 8px;
-}
-
-.panel td {
-    padding: 8px;
-}
-
-.panel input[type="text"] {
-    border: 1px solid #dddddd;
-    border-radius: 2px;
-    padding: 2px;
-    width: auto;
-    font-size: 12px;
-    margin-right: 5px;
-}
-
-.panel input[type="image"] {
-    width: 15px;
-    height: 15px;
-}
-
-.checkist td input {
-    float: left;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.checkist {
-    width: auto;
 }
 
 .link {
@@ -98,11 +55,14 @@ li {
     border: 1px solid #66cdaa;
 }
 
-.head {
+h3 {
     color: #ffffff;
     background: #66cdaa;
     padding: 8px;
     padding-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
 li input {
