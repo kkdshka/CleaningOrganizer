@@ -10,7 +10,10 @@ window.onload = () => {
     renderSchedule(week, schedule);
     const addButtons = [...document.querySelectorAll('input.add-task')];
 
-    addButtons.map((node) => {
+    document.getElementById('save').onclick = () => {
+        saveSchedule(week, schedule);
+    };
+    addButtons.forEach((node) => {
         node.onclick = (event) => {
             addField(node.parentNode, node);
             event.preventDefault();
@@ -19,7 +22,7 @@ window.onload = () => {
     
     const deleteButtons = [...document.querySelectorAll('input.delete-task')];
     
-    deleteButtons.map((node) => {
+    deleteButtons.forEach((node) => {
         node.onclick = (event) => {
             node.parentNode.remove();
             event.preventDefault();
@@ -28,33 +31,25 @@ window.onload = () => {
 };
 
 function renderSchedule(week, schedule) {
-    week.days.map((day) => {
+    week.days.forEach((day) => {
         const parent = document.getElementById(day);
-        const add = parent.getElementsByClassName("add-task")[0];
-        schedule.schedule[day].map((value) => {
-            addField(parent, add, value.name);
+        const addButton = parent.getElementsByClassName("add-task")[0];
+        schedule.schedule[day].forEach((task) => {
+            addField(parent, addButton, task.name);
         });
     });
 }
 
-document.getElementById('save').onclick = () => {
-    const week = new Week;
-    const repository = new ScheduleRepository;
-    const schedule = new Schedule(repository);
-
-    saveSchedule(week, schedule);
-};
-
 function saveSchedule(week, schedule) {
     const scheduleToSave = {};
     let id = 0;
-    week.days.map((day) => {
-        const dayly = [];
+    week.days.forEach((day) => {
+        const dayTasks = [];
         const tasks = [...document.querySelectorAll(`#${day} .task`)];
-        tasks.map((task) => {
-            dayly.push({name: task.value, done: false, id: ++id});
+        tasks.forEach((task) => {
+            dayTasks.push({name: task.value, done: false, id: ++id});
         });
-        scheduleToSave[day] = dayly;
+        scheduleToSave[day] = dayTasks;
     });
     schedule.saveSchedule(scheduleToSave);
 }
@@ -69,21 +64,21 @@ function addField(parentElement, referenceElement, value = '') {
     
     const del = createDeleteButton();
     box.appendChild(del);
-}
+    
+    function createField(value = '') {
+        const field = document.createElement('input');
+        field.type = 'text';
+        field.value = value;
+        field.className = 'task';
+        return field;
+    }
 
-function createField(value = '') {
-    const field = document.createElement('input');
-    field.type = 'text';
-    field.value = value;
-    field.className = 'task';
-    return field;
-}
-
-function createDeleteButton() {
-    const button = document.createElement('input');
-    button.type = 'image';
-    button.alt = 'Del';
-    button.src = '../img/delete.png';
-    button.className = 'delete-task';
-    return button;
+    function createDeleteButton() {
+        const button = document.createElement('input');
+        button.type = 'image';
+        button.alt = 'Del';
+        button.src = '../img/delete.png';
+        button.className = 'delete-task';
+        return button;
+    }
 }

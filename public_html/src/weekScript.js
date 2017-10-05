@@ -8,8 +8,10 @@ window.onload = () => {
     const schedule = new Schedule(repository);
 
     renderList(week, schedule);
-    window.setInterval(() =>
-    location.reload(), (1000 * 60 * 60 * 24) - week.now.getMilliseconds());
+    window.setInterval(
+        location.reload, 
+        (1000 * 60 * 60 * 24) - week.now.getMilliseconds()
+    );
 };
 
 function renderList(week, schedule) {
@@ -35,17 +37,21 @@ function newLi(parent, task, week, schedule) {
     newLi.appendChild(checkbox);
     checkbox.onchange = () =>
     {
-        saveChecked(checkbox, week, schedule);
+        toggleTaskState(checkbox, week, schedule);
     };
 }
 
-function saveChecked(check, week, schedule) {
+function toggleTaskState(check, week, schedule) {
+    const newSchedule = {};
     week.days.forEach((day) => {
-        schedule.schedule[day].forEach((task) => {
+        const dayTasks = [];
+            schedule.schedule[day].forEach((task) => {
             if (check.id == task.id) {
                 task.done = !task.done;
             }
+            dayTasks.push({name: task.name, done: task.done, id: task.id});
         });
+        newSchedule[day] = dayTasks;
     });
-    schedule.saveSchedule();
+    schedule.saveSchedule(newSchedule);
 }
