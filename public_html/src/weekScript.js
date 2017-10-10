@@ -7,34 +7,60 @@ window.onload = () => {
     const repository = new ScheduleRepository;
     const schedule = new Schedule(repository);
 
-    renderList(week, schedule);
+    renderBlocks(week);
+    renderTasks(week, schedule);
     window.setInterval(
         location.reload, 
         (1000 * 60 * 60 * 24) - week.now.getMilliseconds()
     );
 };
 
-function renderList(week, schedule) {
-    week.days.map((day) => {
-        let parent = document.getElementById(day);
-        if (parent.id === week.today) {
-            parent.parentElement.setAttribute('class', 'box today');
-        }
-        schedule.schedule[day].map((task) => newLi(parent, task, week, schedule));
+function renderBlocks(week) {
+    const parent = document.getElementById('box-wrapper');
+    week.daysToRender.forEach((day) => {
+       if (day === week.today) {
+           createBlock(parent, week.ruDays[week.ukDays.indexOf(day)], day, true);
+       }
+       else {
+           createBlock(parent, week.ruDays[week.ukDays.indexOf(day)], day,  false);
+       }
     });
 }
 
-function newLi(parent, task, week, schedule) {
-    let newLi = document.createElement('li');
-    newLi.innerHTML = task.name;
-    parent.appendChild(newLi);
+function createBlock(parent, ruDay, ukDay, isToday) {
+    const div = document.createElement('div');
+    div.className = 'box';
+    if(isToday) {
+        div.className += ' today';
+    }
+    parent.appendChild(div);
+    const h3 = document.createElement('h3');
+    h3.textContent = ruDay;
+    div.appendChild(h3);
+    const ol = document.createElement('ol');
+    ol.id = ukDay;
+    ol.className = 'tasks';
+    div.appendChild(ol);
+}
+
+function renderTasks(week, schedule) {
+    week.daysToRender.forEach((day) => {
+        let parent = document.getElementById(day);
+        schedule.schedule[day].map((task) => newTask(parent, task, week, schedule));
+    });
+}
+
+function newTask(parent, task, week, schedule) {
+    let li = document.createElement('li');
+    li.textContent = task.name;
+    parent.appendChild(li);
     let checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     checkbox.setAttribute('id', `${task.id}`);
     if (task.done) {
         checkbox.checked = true;
     }
-    newLi.appendChild(checkbox);
+    li.appendChild(checkbox);
     checkbox.onchange = () =>
     {
         toggleTaskState(checkbox, week, schedule);

@@ -50,7 +50,7 @@ li {
 }
 
 .box {
-    flex-basis: 13%;
+    flex-basis: 16%;
     display: inline-block;
     border: 1px solid #66cdaa;
 }
@@ -70,6 +70,7 @@ li input {
 }
 
 .today {
+    flex-basis: 25%;
     border-color: #20B2AA;
     background: #D4F5E8;
 }
