@@ -11,4 +11,16 @@ class ScheduleRepository {
         let data = JSON.stringify(schedule);
         localStorage.setItem('schedule', data);
     }
+    
+    getNextId() {
+        let id;
+        if (!localStorage.hasOwnProperty('id-for-task')) {
+            id = 0;
+        } else {
+            id = localStorage.getItem('id-for-task');
+        }
+        id++;
+        localStorage.setItem('id-for-task', id);
+        return id;
+    }
 }

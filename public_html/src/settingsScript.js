@@ -11,7 +11,7 @@ window.onload = () => {
     const addButtons = [...document.querySelectorAll('input.add-task')];
 
     document.getElementById('save').onclick = () => {
-        saveSchedule(week, schedule);
+        saveSchedule(week, schedule, repository);
     };
     addButtons.forEach((node) => {
         node.onclick = (event) => {
@@ -19,9 +19,9 @@ window.onload = () => {
             event.preventDefault();
         };
     });
-    
+
     const deleteButtons = [...document.querySelectorAll('input.delete-task')];
-    
+
     deleteButtons.forEach((node) => {
         node.onclick = (event) => {
             node.parentNode.remove();
@@ -40,14 +40,15 @@ function renderSchedule(week, schedule) {
     });
 }
 
-function saveSchedule(week, schedule) {
+function saveSchedule(week, schedule, repo) {
     const scheduleToSave = {};
-    let id = 0;
     week.days.forEach((day) => {
         const dayTasks = [];
         const tasks = [...document.querySelectorAll(`#${day} .task`)];
         tasks.forEach((task) => {
-            dayTasks.push({name: task.value, done: false, id: ++id});
+            if (task.value !== '') {
+                dayTasks.push({name: task.value, done: false, id: repo.getNextId()});
+            }
         });
         scheduleToSave[day] = dayTasks;
     });
@@ -58,13 +59,13 @@ function addField(parentElement, referenceElement, value = '') {
     const box = document.createElement('div');
     box.className = 'field-box';
     parentElement.insertBefore(box, referenceElement);
-    
+
     const field = createField(value);
     box.appendChild(field);
-    
+
     const del = createDeleteButton();
     box.appendChild(del);
-    
+
     function createField(value = '') {
         const field = document.createElement('input');
         field.type = 'text';
@@ -80,5 +81,5 @@ function addField(parentElement, referenceElement, value = '') {
         button.src = '../img/delete.png';
         button.className = 'delete-task';
         return button;
-    }
+}
 }
