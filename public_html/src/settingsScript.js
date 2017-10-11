@@ -47,12 +47,24 @@ function saveSchedule(week, schedule, repo) {
         const tasks = [...document.querySelectorAll(`#${day} .task`)];
         tasks.forEach((task) => {
             if (task.value !== '') {
-                dayTasks.push({name: task.value, done: false, id: repo.getNextId()});
+                dayTasks.push({
+                    name: task.value,
+                    done: findStatus(task.value, day),
+                    id: repo.getNextId()
+                });
             }
         });
         scheduleToSave[day] = dayTasks;
     });
     schedule.saveSchedule(scheduleToSave);
+
+    function findStatus(taskName, day) {
+        const task = schedule.schedule[day].filter(task => taskName === task.name);
+        if(task[0].done) {
+            return true;
+        }
+        return false;
+    }
 }
 
 function addField(parentElement, referenceElement, value = '') {
