@@ -1,7 +1,7 @@
 ## CleaningOrganizer
 This project contains organizer for cleaning.
 ### Getting started
-Then run your CLI, _cd_ to your projects folder and use command:
+Run your CLI, _cd_ to your projects folder and use command:
 ```sh
 $ git clone git@github.com:kkdshka/CleaningOrganizer.git
 ```
